@@ -1,5 +1,8 @@
 import axios from 'axios';
 import OfferAPI from './offer/offer.api';
+import NeedsAPI from './needs/needs.api';
+import TenderAPI from './tender/tender.api';
+import UserAPI from './user/user.api';
 
 const instanceNegocioFechadoAPI = axios.create({
     baseURL: 'http://localhost:9000',
@@ -9,7 +12,13 @@ const instanceNegocioFechadoAPI = axios.create({
 });
 
 const instanceOfferAPI = new OfferAPI(instanceNegocioFechadoAPI);
+const instanceNeedsAPI = new NeedsAPI(instanceNegocioFechadoAPI);
+const instanceTenderAPI = new TenderAPI(instanceNegocioFechadoAPI);
+const instanceUserAPI = new UserAPI(instanceNegocioFechadoAPI);
 
 export {
-    instanceOfferAPI
+    instanceOfferAPI,
+    instanceNeedsAPI,
+    instanceTenderAPI,
+    instanceUserAPI
 };

@@ -1,6 +1,5 @@
 <template>
   <v-card
-    :loading="loading"
     class="mx-auto my-8"
     max-width="350"
   >
@@ -34,17 +33,17 @@
     <v-divider class="mx-4"></v-divider>
 
     <v-card-actions>
+      <offer-sheet
+        :id="id"
+        :title="title"
+        :description="description"
+        :price="price"
+        :worker="worker"
+      ></offer-sheet>
+      <v-spacer></v-spacer>
       <v-btn
         color="deep-purple lighten-2"
         text
-        @click="reserve"
-      >
-        Ver Oferta
-      </v-btn>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="reserve"
       >
         Conhecer Profissional
       </v-btn>
@@ -53,17 +52,26 @@
 </template>
 
 <script>
+import OfferSheet from './sheet/OfferSheet';
+
 export default {
   name: 'offer-card',
-  components: {},
+  components: { OfferSheet },
+  props: {
+    id: Number,
+    title: String,
+    description: String,
+    price: String,
+    worker: Number
+  },
   data() {
     return {
+      sheet: false,
       rating: 5,
       stars: 5, 
       votes: 1100,
-      title: "Chef de cozinha para eventos",
-      description: "Chef de cozinha experiente disponível para comandar equipes em eventos...",
-      image: "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      image: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+      render: 'view'
     }
   }
 };

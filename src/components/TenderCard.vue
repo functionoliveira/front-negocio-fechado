@@ -1,6 +1,5 @@
 <template>
   <v-card
-    :loading="loading"
     class="mx-auto my-8"
     max-width="350"
   >
@@ -9,7 +8,7 @@
       src="../assets/dev-image.jpeg"
     ></v-img>
 
-    <v-card-title>{{ needs.title }}</v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
   
 
     <v-card-text>
@@ -40,40 +39,36 @@
         <div class="grey--text ml-4">{{ tender.worker.rating }} ({{ tender.worker.votes }})</div>
       </v-row>
 
-      <div>{{ tender.description }}</div>
+      <div>{{ description }}</div>
     </v-card-text>
 
     <v-divider class="mx-4"></v-divider>
-    <div class="mx-4 my-4 subtitle-1">{{ tender.price }}</div>
+    <div class="mx-4 my-4 subtitle-1">{{ price }}</div>
 
     <v-card-actions>
       <v-btn
         color="deep-purple lighten-2"
         text
+        @click="del"
       >
-        Aceitar
-      </v-btn>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-      >
-        Recusar
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-      >
-        Ver
+        Retirar Proposta
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { instanceTenderAPI } from '../api/index';
+
 export default {
   name: 'tender-card',
   components: {},
+  props: {
+    id: Number,
+    title: String,
+    description: String,
+    price: String
+  },
   data() {
     return {
       tender: {
@@ -91,6 +86,18 @@ export default {
         title: "Desenvolvedor Freelancer."
       }
     } 
+  },
+  methods: {
+    del() {
+      instanceTenderAPI
+        .delete(this.id)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 };
 </script>

@@ -1,36 +1,42 @@
 <template>
   <div>
     <app-header></app-header>
-    <v-row>
-      <v-col>
-        <v-tabs
-          v-model="tab"
-          background-color="transparent"
-          color="basil"
-          grow
-        >
-          <v-tab :key="1">Início</v-tab>
-          <v-tab :key="2">Contratos</v-tab>
-          <v-tab :key="3">Procura</v-tab>
-          <v-tab :key="4">Propostas</v-tab>
+    <v-tabs
+      v-model="tab"
+      background-color="transparent"
+      color="basil"
+      grow
+      centered
+      icons-and-text
+    >
+      <v-tab :key="1">
+        <v-icon>mdi-phone</v-icon>  
+      </v-tab>
+      <v-tab :key="2">
+        <v-icon>mdi-phone</v-icon>  
+      </v-tab>
+      <v-tab :key="3">
+        <v-icon>mdi-phone</v-icon>
+      </v-tab>
+      <v-tab :key="4">
+        <v-icon>mdi-phone</v-icon>
+      </v-tab>
 
-          <v-tabs-items v-model="tab">
-            <v-tab-item :key="1">
-              <offers-list></offers-list>
-            </v-tab-item>
-            <v-tab-item :key="2">
-              <contract-list></contract-list>
-            </v-tab-item>
-            <v-tab-item :key="3">
-              <my-needs-list></my-needs-list>
-            </v-tab-item>
-            <v-tab-item :key="4">
-              <tender-list></tender-list>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-tabs>
-      </v-col>
-    </v-row>
+      <v-tabs-items v-model="tab">
+        <v-tab-item :key="1">
+          <offers-list></offers-list>
+        </v-tab-item>
+        <v-tab-item :key="2">
+          <contract-list></contract-list>
+        </v-tab-item>
+        <v-tab-item :key="3">
+          <my-needs-list></my-needs-list>
+        </v-tab-item>
+        <v-tab-item :key="4">
+          <tender-list></tender-list>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-tabs>
   </div>
 </template>
 
