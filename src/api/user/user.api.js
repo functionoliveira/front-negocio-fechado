@@ -13,6 +13,16 @@ export default class UserAPI {
         return call;
     }
 
+    listOffers(id) {
+        const call = this.instance.get(`/usuario/${id}/ofertas/`);
+        return call;
+    }
+
+    listContracts(id) {
+        const call = this.instance.get(`/usuario/${id}/contratos/`);
+        return call;
+    }
+
     listTenders(id) {
         const call = this.instance.get(`/usuario/${id}/propostas/`);
         return call;

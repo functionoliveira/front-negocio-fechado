@@ -40,13 +40,6 @@
         :price="price"
         :worker="worker"
       ></offer-sheet>
-      <v-spacer></v-spacer>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-      >
-        Conhecer Profissional
-      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

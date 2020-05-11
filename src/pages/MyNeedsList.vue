@@ -21,15 +21,16 @@
     </v-row>
 
     <v-container>
-      <my-needs-card
-        v-show="IS_LIST"
-        v-for="item in results"
-        :key="item.id"
-        :id="item.id"
-        :title="item.title"
-        :description="item.description"
-      ></my-needs-card>
-
+      <v-row>
+        <my-needs-card
+          v-show="IS_LIST"
+          v-for="item in results"
+          :key="item.id"
+          :id="item.id"
+          :title="item.title"
+          :description="item.description"
+        ></my-needs-card>
+      </v-row>
       <create-needs v-show="IS_CREATE"></create-needs>
     </v-container>
   </v-container>

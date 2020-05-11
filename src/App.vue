@@ -1,26 +1,21 @@
 <template>
   <v-app>
     <v-content>
-      <consumer-home></consumer-home>
-      <!-- <worker-home></worker-home> -->
+      <auth></auth>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import ConsumerHome from './layout/ConsumerHome';
-// import WorkerHome from './layout/WorkerHome';
+import Auth from './pages/Auth';
 
 export default {
   name: 'App',
 
   components: {
-    ConsumerHome,
-    // WorkerHome
+    Auth,
   },
 
-  data: () => ({
-    //
-  }),
+  data: () => ({ }),
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
   <sheet>
-      <template v-slot:view>
-        <div>Visualização da oferta</div>
-      </template>
-      <template v-slot:tender>
-        <create-tender :offer="id"></create-tender>
-      </template>
-    </sheet>
+    <template v-slot:view>
+      <div>Visualização da oferta</div>
+    </template>
+    <template v-slot:tender>
+      <create-tender :needs="id"></create-tender>
+    </template>
+  </sheet>
 </template>
 
 <script>

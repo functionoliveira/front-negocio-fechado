@@ -8,6 +8,11 @@ export default class OfferAPI {
         return call;
     }
 
+    listOffers(id) {
+        const call = this.instance.get(`/oferta/${id}/propostas/`);
+        return call;
+    }
+
     get(id) {
         const call = this.instance.get(`/oferta/${id}`);
         return call;
