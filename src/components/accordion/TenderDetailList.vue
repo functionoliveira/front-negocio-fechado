@@ -7,9 +7,14 @@
       <v-expansion-panel-header>{{ tender.title }}</v-expansion-panel-header>
       <v-expansion-panel-content>
         <tender-detail
+          :id="tender.id"
+          :offerId="offerId"
+          :title="tender.title"
           :description="tender.description"
-          :files="null"
           :price="tender.price"
+          :proposer="tender.proposer"
+          :state="tender.state"
+          :files="null"
         ></tender-detail>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -23,6 +28,7 @@ export default {
   name: 'tender-detail-list',
   components: { TenderDetail },
   props: {
+    offerId: Number,
     tenders: Array
   },
 };

@@ -14,7 +14,12 @@ const state = {
 // getters
 const getters = { 
     getUser: state => {
-        return state.user;
+        return {
+            id: state.user._id,
+            full_name: state.user._fullName,
+            cpf: state.user._cpf,
+            type: state.user._type
+        };
     },
     getUserId: state => {
         return state.user._id;

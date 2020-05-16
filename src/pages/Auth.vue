@@ -1,6 +1,7 @@
 <template>
   <div>
-    <form-login v-show="!logged" @on-login="login($event)"></form-login>
+    <form-login v-show="!logged && !register" @on-login="login($event)" @register="register=true"></form-login>
+    <form-register v-show="register" @back="register=false"></form-register>
     <consumer-home v-show="logged && $store.getters.isConsumer"></consumer-home>
     <worker-home v-show="logged && $store.getters.isWorker"></worker-home>
   </div>
@@ -8,6 +9,7 @@
 
 <script>
 import FormLogin from '../components/form/FormLogin';
+import FormRegister from '../components/form/FormRegister';
 import ConsumerHome from '../layout/ConsumerHome';
 import WorkerHome from '../layout/WorkerHome';
 
@@ -16,12 +18,14 @@ export default {
 
   components: {
     FormLogin,
+    FormRegister,
     ConsumerHome,
     WorkerHome
   },
 
   data: () => ({
     logged: false,
+    register: false,
     loading: false
   }),
   methods: {

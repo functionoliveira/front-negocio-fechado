@@ -1,7 +1,12 @@
 <template>
   <div>
-    <create-contract v-show="go"></create-contract>
-    <v-container v-show="!go">
+    <create-contract 
+      v-show="isAccept"
+      :id="id"
+      :title="title"
+      :proposer="proposer"
+    ></create-contract>
+    <v-container v-show="!isAccept">
       <label>Valor R$ {{ price }}</label>
       <label>Descrição</label>
       <p>{{ description }}</p>
@@ -25,24 +30,44 @@
 </template>
 
 <script>
+import { instanceOfferAPI } from '../../api/index';
 import CreateContract from '../form/CreateContract';
 
 export default {
   name: 'tender-detail',
   components: { CreateContract },
   props: {
-    price: String,
+    id: Number,
+    offerId: Number,
+    title: String,
     description: String,
-    files: String
+    price: String,
+    proposer: Object,
+    state: Number,
+    files: String,
+    go: Boolean
   },
-  data() {
-    return {
-      go: false
+  computed: {
+    isAccept: {
+      get() {
+        return this.state === 2 || this.go;
+      },
+      set(val) {
+        this.go = val;
+      }
     }
   },
   methods: {
     accept() {
-      this.go = true;
+      instanceOfferAPI
+        .acceptTender(this.offerId, this.id)
+        .then(response => {
+          this.isAccept = true;
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     reject() {
 

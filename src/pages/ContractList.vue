@@ -6,6 +6,12 @@
       <contract-card
         v-for="item in results"
         :key="item.id"
+        :id="item.id"
+        :tender="item.tender"
+        :contractor="item.contractor"
+        :hired="item.hired"
+        :rules="item.rules"
+        :state="item.state"
       ></contract-card>
     </v-row>
   </v-container>

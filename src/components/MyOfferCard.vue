@@ -6,7 +6,7 @@
       <div>{{ description }}</div>
     </v-card-text>
     <v-divider class="mx-4"></v-divider>
-    <tender-sheet :tendersQtd="tenders.length" :tenders="tenders"></tender-sheet>
+    <tender-sheet :tendersQtd="tenders.length" :offerId="id" :tenders="tenders"></tender-sheet>
     <v-divider class="mx-4"></v-divider>
     <v-card-actions>
       <v-btn color="primary lighten-2" text>

@@ -28,6 +28,11 @@ export default class OfferAPI {
         return call;
     }
 
+    acceptTender(offer_id, tender_id) {
+        const call = this.instance.put(`/oferta/${offer_id}/proposta/${tender_id}/aceitar/`);
+        return call; 
+    }
+
     delete(id) {
         const call = this.instance.delete(`/oferta/${id}`);
         return call;

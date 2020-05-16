@@ -19,7 +19,7 @@
         </v-list-item-avatar>
       </a>
       <v-list-item-content>
-        <v-list-item-title class="headline">Título do contrato.</v-list-item-title>
+        <v-list-item-title class="headline">{{ tender.title }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
 
@@ -29,24 +29,36 @@
     ></v-img>
 
     <v-card-text>
-      Uma breve descrição do contrato atual...
+      {{ tender.description }}
     </v-card-text>
 
     <v-card-actions>
-      <v-btn
-        text
-        color="deep-purple accent-4"
-      >
-        Ver Contrato
-      </v-btn>
+      <contract-sheet
+        :id="id"
+        :tender="tender"
+        :contractor="contractor"
+        :hired="hired"
+        :rules="rules"
+        :state="state"
+      ></contract-sheet>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import ContractSheet from './sheet/ContractSheet';
+
 export default {
   name: 'contract-card',
-
-  components: {},
+  components: { ContractSheet },
+  props: {
+    id: Number,
+    tender: Object,
+    contractor: Object,
+    hired: Object,
+    state: Number, 
+    rules: String
+  },
+  mounted() { }
 };
 </script>

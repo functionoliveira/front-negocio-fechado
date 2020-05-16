@@ -1,12 +1,11 @@
 <template>
   <v-form :status="loading" ref="form" lazy-validation>
     <p>
-    O contrato a seguir foi construído sobre a proposta {{ tender }},
-    doravante denominada {{contractor}} e, 
-    com moradia em  Belo Horizonte/ MG, na Rua A
-    cujo CPF sob o n° XXX.XXX.XXX-XX, doravante 
-    denominada {{ hired }},
-    tem entre si justo e contratado o que abaixo se segue:
+    O contrato a seguir foi construído sobre a proposta {{ title }},
+    doravante denominada {{ contractor.full_name }} e, cujo CPF sob o 
+    n° {{ contractor.cpf }}, doravante denominada {{ hired.full_name }}, cujo 
+    CPF sob o n° {{ hired.cpf }}, tem entre si justo e contratado 
+    o que abaixo se segue:
     </p>
     <rule-field 
       v-for="i in rules.length" 
@@ -34,19 +33,42 @@
 </template>
 
 <script>
+  import { instanceContractAPI } from '../../api/index';
   import RuleField from '../field/RuleField';
 
 export default {
   name: 'create-needs',
   components: { RuleField },
+  props: {
+    id: Number,
+    title: String,
+    proposer: Object
+  },
   data() {
     return {
-      tender: '#123456',
-      contractor: 'CONTRATANTE',
-      hired: 'CONTRATADO',
       rules: [],
       loading: false,
     }
+  },
+  computed: {
+    contractor: {
+      get() {
+        if(this.proposer.type === 'CONSUMER') {
+          return this.proposer;
+        }else{
+          return this.$store.getUser;
+        }
+      }
+    },
+    hired: {
+      get() {
+        if(this.proposer.type === 'WORKER') {
+          return this.proposer;
+        }else{
+          return this.$store.getters.getUser;
+        }
+      }
+    } 
   },
   methods: {
     addRule() {
@@ -57,11 +79,22 @@ export default {
       this.rules.push(rule);
     },
     create() {
-      console.log(this.tender);
-      console.log(this.contractor);
-      console.log(this.hired);
-      console.log(this.rules);
-      console.log('Criar contrato.')
+      let body = {
+        tender: this.id,
+        contractor: this.contractor.id,
+        hired: this.hired.id,
+        rules: JSON.stringify(this.rules),
+        state: 1
+      };
+
+      instanceContractAPI
+        .post(body)
+        .then(response => {
+          console.log(response);
+        })    
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

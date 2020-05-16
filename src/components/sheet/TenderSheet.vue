@@ -21,7 +21,7 @@
         style="max-height: 400px"
         class="overflow-y-auto"
       >
-        <tender-detail-list :tenders="tenders"></tender-detail-list>
+        <tender-detail-list :offerId="offerId" :tenders="tenders"></tender-detail-list>
       </v-container>
     </v-sheet>
   </v-bottom-sheet>
@@ -34,6 +34,7 @@ export default {
   name: 'tender-sheet',
   components: { TenderDetailList },
   props: {
+    offerId: Number,
     tendersQtd: Number,
     tenders: Array
   },
