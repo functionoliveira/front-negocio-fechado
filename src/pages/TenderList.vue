@@ -4,7 +4,7 @@
 
     <v-row>
       <tender-card
-        v-for="item in results"
+        v-for="item in listTendersFromUser"
         :key="item.id"
         :id="item.id"
         :title="item.title"
@@ -17,7 +17,7 @@
 
 <script>
 import TenderCard from '../components/TenderCard';
-import { instanceUserAPI } from '../api/index';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'tender-list',
@@ -25,24 +25,20 @@ export default {
     TenderCard
   },
   data() {
-    return {
-      results: []
-    }
+    return { }
   },
   mounted() {
-    this.loadData();
+    this.loadData(this.$store.getters.getUserId);
+  },
+  computed: {
+    ...mapGetters([
+      'listTendersFromUser',
+    ])
   },
   methods: {
-    loadData() {
-      instanceUserAPI
-        .listTenders(this.$store.getters.getUserId)
-        .then(response => {
-          this.results = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
+    ...mapActions({
+      loadData: 'loadTendersFromUser'
+    })
   }
 };
 </script>

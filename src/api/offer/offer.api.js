@@ -19,7 +19,7 @@ export default class OfferAPI {
     }
 
     post(body) {
-        const call = this.instance.post('/oferta/', body);
+        const call = this.instance.post('/oferta/', body, {headers: {'Content-Type' : 'multipart/form-data'}});
         return call;
     }
 

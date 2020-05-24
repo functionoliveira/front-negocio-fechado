@@ -28,7 +28,14 @@
           @state="signed=$event"
         ></sign-contract>
         <v-container v-else>
-          <p class="success--text">Contrato assinado!</p>
+          <p class="success--text">Contrato assinado por {{ hired.full_name }}!</p>
+          <p class="success--text">Contrato assinado por {{ contractor.full_name }}!</p>
+          <v-btn color="primary" text>
+            <v-icon small left>mdi-keyboard-backspace</v-icon> Efetuar Pagamento
+          </v-btn>
+          <v-btn color="primary" text>
+            <v-icon small left>mdi-keyboard-backspace</v-icon> Serviço Prestado
+          </v-btn>
         </v-container>
       </v-container>
     </v-sheet>
@@ -61,8 +68,6 @@ export default {
   },
   methods: {
     exhibition() {
-      console.log(this.$store.getters.isConsumer);
-      console.log(this.state);
       if(this.state === 5) {
         return false;
       }

@@ -39,6 +39,7 @@
         :description="description"
         :price="price"
         :worker="worker"
+        :files="files"
       ></offer-sheet>
     </v-card-actions>
   </v-card>
@@ -55,7 +56,8 @@ export default {
     title: String,
     description: String,
     price: String,
-    worker: Number
+    worker: Number,
+    files: String
   },
   data() {
     return {

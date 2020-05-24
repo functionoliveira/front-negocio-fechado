@@ -5,7 +5,6 @@
     <v-card-text>
       <div>{{ description }}</div>
     </v-card-text>
-    <v-divider class="mx-4"></v-divider>
     <tender-sheet :tendersQtd="tenders.length" :offerId="id" :tenders="tenders"></tender-sheet>
     <v-divider class="mx-4"></v-divider>
     <v-card-actions>
@@ -57,14 +56,16 @@ export default {
         });
     },
     del() {
-      // instanceNeedsAPI
-      //   .delete(this.id)
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
+      instanceOfferAPI
+        .delete(this.id)
+        .then(response => {
+          if(response.status === 204) {
+            this.$store.dispatch('delOffer', this.id);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };

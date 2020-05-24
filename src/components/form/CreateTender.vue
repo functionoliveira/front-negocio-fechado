@@ -82,13 +82,11 @@ export default {
   computed: { },
   methods: {
     validate() {
-      console.log('Validar formulário.');
       if (this.$refs.form.validate()) {
         this.mountBody();
       }
     },
     mountBody() {
-      console.log('Montando body.');
       let body = {
         title: this.title,
         price: this.price,
@@ -103,21 +101,18 @@ export default {
       this.create(body)
     },
     create(body) {
-      console.log('Cadastrar necessidade.');
       this.loading = true;
       instanceTenderAPI
         .post(body)
         .then(response => {
-          console.log(response);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000)
+          if(response.status === 201) {
+            this.$store.dispatch('addTender', response.data);
+          }
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000);
+          this.loading = false;
         });
     }
   }

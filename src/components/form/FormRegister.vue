@@ -55,6 +55,7 @@
           :rules="[v => !!v || 'CPF é necessário.']"
           v-model="cpf"
           label="CPF"
+          v-mask="'###.###.###-##'"
           required
         ></v-text-field>
 
@@ -75,6 +76,7 @@
           :rules="[v => !!v || 'Telefone é necessário.']"
           v-model="phone"
           label="Telefone"
+          v-mask="'(##) #####-####'"
           required
         ></v-text-field>
 
@@ -135,8 +137,10 @@
         </v-dialog>
 
         <v-select
-          :items="['Prestador de serviço', 'Consumidor']"
+          :items="[{ key: 'WORKER', label: 'Prestador de serviço' }, { key: 'CONSUMER', label: 'Consumidor' }]"
           :rules="[v => !!v || 'Selecione uma opção.']"
+          item-text="label"
+          item-value="key"
           v-model="type"
           label="Você usará o app como?"
         ></v-select>
@@ -156,9 +160,13 @@
 </template>
 
 <script>
+import { mask } from 'vue-the-mask';
+import { instanceUserAPI } from '../../api/index';
+
 export default {
   name: 'form-register',
   components: { },
+  directives: { mask },
   data() {
     return {
       loading: false,
@@ -179,9 +187,30 @@ export default {
     }
   },
   methods: {
+    formData() {
+      let form = new FormData();
+      form.append('photo', this.photo);
+      form.append('first_name', this.name);
+      form.append('last_name', this.lastName);
+      form.append('email', this.email);
+      form.append('cpf', this.cpf);
+      form.append('phone', this.phone);
+      form.append('address', this.address);
+      form.append('password', this.password);
+      form.append('birth_date', this.date);
+      form.append('type', this.type);
+      return form;
+    },
     register() {
       if (this.$refs.form.validate()) {
-        console.log('Cadastrar');
+        instanceUserAPI
+          .post(this.formData())
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     }
   },

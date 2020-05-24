@@ -19,7 +19,7 @@ export default class NeedsAPI {
     }
 
     post(body) {
-        const call = this.instance.post('/necessidade/', body);
+        const call = this.instance.post('/necessidade/', body, {headers: {'Content-Type' : 'multipart/form-data'}});
         return call;
     }
 

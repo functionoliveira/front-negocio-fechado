@@ -7,6 +7,7 @@ const state = {
     _fullName: '',
     _photo: '',
     _birthDate: '',
+    _address: '',
     _cpf: '',
     _type: 'CONSUMER'
 }
@@ -26,6 +27,9 @@ const getters = {
     },
     getUserName: state => {
         return state.user._fullName;
+    },
+    getUserPhoto: state => {
+        return state.user._photo;
     },
     isWorker: state => {
         return state.user._type === 'WORKER';
@@ -49,6 +53,7 @@ const mutations = {
         state.user._birthDate = user.birth_date;
         state.user._photo = user.photo;
         state.user._cpf = user.cpf;
+        state.user._address = user.address;
         state.user._type = user.type;
     }
 }

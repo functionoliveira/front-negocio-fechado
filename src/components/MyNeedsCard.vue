@@ -12,33 +12,19 @@
 
     <v-card-text>
       <div>{{ description }}</div>
-      <div class="my-4 subtitle-1">
-        Propostas {{ tenders.length }}
-      </div>
-      <v-chip-group
-        active-class="deep-purple accent-4 white--text"
-        column
-      >
-        <v-chip v-for="tender in tenders" :key="tender.id">{{ tender.title }}</v-chip>
-      </v-chip-group>
     </v-card-text>
+
+    <tender-sheet :tendersQtd="tenders.length" :offerId="id" :tenders="tenders"></tender-sheet>
 
     <v-divider class="mx-4"></v-divider>
 
     <v-card-actions>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-      >
-        Editar
+      <v-btn color="primary lighten-2" text>
+        <v-icon small left>mdi-pencil</v-icon> Editar
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn
-        color="deep-purple lighten-2"
-        text
-        @click="del"
-      >
-        Deletar
+      <v-btn color="error lighten-2" text @click="del">
+        <v-icon small left>mdi-delete</v-icon> Retirar Necessidade
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -46,10 +32,11 @@
 
 <script>
 import { instanceNeedsAPI } from '../api/index';
+import TenderSheet from '../components/sheet/TenderSheet';
 
 export default {
   name: 'tender-card',
-  components: {},
+  components: { TenderSheet },
   props: {
     id: Number,
     title: String,
@@ -79,7 +66,9 @@ export default {
       instanceNeedsAPI
         .delete(this.id)
         .then(response => {
-          console.log(response);
+          if(response.status === 204) {
+            this.$store.dispatch('delNeeds', this.id);
+          }
         })
         .catch(error => {
           console.log(error);

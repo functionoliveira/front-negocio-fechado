@@ -34,7 +34,7 @@ export default class UserAPI {
     }
 
     post(body) {
-        const call = this.instance.post('/usuario/', body);
+        const call = this.instance.post('/usuario/', body, {headers : { 'Content-Type' : 'multipart/form-data' }});
         return call;
     }
 

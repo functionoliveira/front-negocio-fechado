@@ -16,7 +16,7 @@
       :counter="20"
       v-model="price"
       label="Valor"
-      hint="R$ valor/hora ou R$ valor total."
+      hint="O valor usa a moeda real, ex.: 0,00."
       required
     ></v-text-field>
     <v-textarea
@@ -33,7 +33,6 @@
       show-size 
       small-chips 
       counter 
-      multiple
       v-model="files"
       label="Anexos"
     ></v-file-input>
@@ -48,66 +47,59 @@
 </template>
 
 <script>
+import { mask } from 'vue-the-mask';
 import { instanceOfferAPI } from '../../api/index';
 
 export default {
   name: 'create-offer',
   components: {},
+  directives: { mask },
   data() {
     return {
       loading: false,
       title: '',
-      price: '',
+      price: 'R$ 0,00',
       description: '',
       files: null,
       form: {
         valid: true,
         rules: {
           title: [v => !!v || "É necessário informar o título."],
-          price: [v => !!v || "É necessário informar o título."],
-          description: [v => !!v || "É necessário informar o título."]
+          price: [v => !!v || "É necessário informar o valor.", v => !v.match(/[^0-9,]/g) || "Valor inválido."],
+          description: [v => !!v || "É necessário informar o descrição."]
         },
       },
     }
   },
   methods: {
     validate() {
-      console.log('Validar formulário.');
       if (this.$refs.form.validate()) {
-        this.mountBody();
+        this.formDate();
       }
     },
-    mountBody() {
-      console.log('Montando body.');
-      let body = {
-        title: this.title,
-        price: this.price,
-        description: this.description,
-        worker: this.$store.getters.getUserId,
-        files: this.files,
-        state: 1
-      }
-
-      this.create(body)
+    formDate() {
+      let form = new FormData();
+      form.append('title', this.title);
+      form.append('price', this.price);
+      form.append('description', this.description);
+      form.append('worker', this.$store.getters.getUserId);
+      form.append('files', this.files ? this.files : '');
+      form.append('state', 1);
+      this.create(form);
     },
     create(body) {
-      console.log('Cadastrar oferta.');
       this.loading = true;
       instanceOfferAPI
         .post(body)
         .then(response => {
-          console.log(response);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000)
+          this.$store.dispatch('addOffer', response.data);
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000);
+          this.loading = false;
         });
-    }
+    },
   }
 };
 </script>

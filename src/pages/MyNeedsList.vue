@@ -24,7 +24,7 @@
       <v-row>
         <my-needs-card
           v-show="IS_LIST"
-          v-for="item in results"
+          v-for="item in listNeedsFromUser"
           :key="item.id"
           :id="item.id"
           :title="item.title"
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { instanceUserAPI } from '../api/index';
+import { mapGetters, mapActions } from 'vuex';
 import MyNeedsCard from '../components/MyNeedsCard';
 import CreateNeeds from '../components/form/CreateNeeds';
 
@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted() {
-    this.loadData();
+    this.loadData(this.$store.getters.getUserId);
   },
   computed: {
     IS_LIST() {
@@ -65,25 +65,21 @@ export default {
     },
     IS_CREATE() {
       return this.state === 'create';
-    }
+    },
+    ...mapGetters([
+      'listNeedsFromUser',
+    ])
   },
   methods: {
+    ...mapActions({
+      loadData: 'loadNeedsFromUser'
+    }),
     onCreate() {
       this.state = 'create';
     },
     onList() {
       this.state = 'list';
     },
-    loadData() {
-      instanceUserAPI
-        .listNeeds(this.$store.getters.getUserId)
-        .then(response => {
-          this.results = response.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   }
 };
 </script>

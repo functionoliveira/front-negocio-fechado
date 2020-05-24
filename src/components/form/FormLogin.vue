@@ -14,12 +14,13 @@
         :counter="48"
         v-model="cpf"
         label="CPF"
+        v-mask="'###.###.###-##'"
         required
       ></v-text-field>
       <v-text-field
         :loading="loading"
         :disabled="loading"
-        :counter="48"
+        type="password"
         v-model="password"
         label="Senha"
         required
@@ -45,9 +46,12 @@
 </template>
 
 <script>
+import { mask } from 'vue-the-mask';
+
 export default {
   name: 'form-login',
   components: { },
+  directives: { mask },
   data() {
     return {
       loading: false,

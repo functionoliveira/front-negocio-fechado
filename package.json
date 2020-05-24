@@ -12,6 +12,7 @@
     "core-js": "^3.6.4",
     "jsonwebtoken": "^8.5.1",
     "vue": "^2.6.11",
+    "vue-the-mask": "^0.11.1",
     "vuetify": "^2.2.11",
     "vuex": "^3.3.0"
   },

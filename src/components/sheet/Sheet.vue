@@ -5,7 +5,7 @@
         <v-icon small left>mdi-eye</v-icon> Ver
       </v-btn>
     </template>
-    <v-sheet class="px-3" color="grey lighten-3" height="100vh">
+    <v-sheet class="px-3" color="grey lighten-3" height="90vh">
       <v-btn color="error" text @click="sheet = !sheet" shrink-on-scroll>
         <v-icon small left>mdi-keyboard-backspace</v-icon> Voltar
       </v-btn>
@@ -18,7 +18,7 @@
       </v-btn>
       <v-divider></v-divider>
       <v-container
-        style="max-height: 400px"
+        style="height: 80vh"
         class="overflow-y-auto"
       >
         <slot v-if="render==='view'" class="py-3" name="view"></slot>

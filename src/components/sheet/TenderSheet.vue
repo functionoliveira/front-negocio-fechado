@@ -1,15 +1,14 @@
 <template>
   <v-bottom-sheet v-model="sheet" persistent>
     <template v-slot:activator="{ on }">
-      <p>{{ 
+      <v-btn text v-on="on" color="primary lighten-2">
+        <v-icon small left>mdi-eye</v-icon> {{ 
         tendersQtd > 0 ?
           tendersQtd == 1 ?
             `${tendersQtd} proposta feita.` :
             `${tendersQtd} propostas feitas.`
           : `Não existe nenhuma proposta.`
-      }}</p>
-      <v-btn text v-on="on" color="primary lighten-2">
-        <v-icon small left>mdi-eye</v-icon> Ver Propostas
+        }}
       </v-btn>
     </template>
     <v-sheet class="px-3" color="grey lighten-3" height="100vh">

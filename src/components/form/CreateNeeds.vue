@@ -16,7 +16,7 @@
       :counter="20"
       v-model="price"
       label="Valor"
-      hint="R$ valor/hora ou R$ valor total."
+      hint="O valor usa a moeda real, ex.: 0,00."
       required
     ></v-text-field>
     <v-textarea
@@ -33,7 +33,6 @@
       show-size 
       small-chips 
       counter 
-      multiple
       v-model="files"
       label="Anexos"
     ></v-file-input>
@@ -69,48 +68,39 @@ export default {
         valid: true,
         rules: {
           title: [v => !!v || "É necessário informar o título."],
-          price: [v => !!v || "É necessário informar o título."],
-          description: [v => !!v || "É necessário informar o título."]
+          price: [v => !!v || "É necessário informar o valor.", v => !v.match(/[^0-9,]/g) || "Valor inválido."],
+          description: [v => !!v || "É necessário informar a descrição."]
         },
       },
     }
   },
   methods: {
     validate() {
-      console.log('Validar formulário.');
       if (this.$refs.form.validate()) {
-        this.mountBody();
+        this.formDate();
       }
     },
-    mountBody() {
-      console.log('Montando body.');
-      let body = {
-        title: this.title,
-        price: this.price,
-        description: this.description,
-        consumer: this.$store.getters.getUserId,
-        files: this.files,
-        state: 1
-      }
-
-      this.create(body)
+    formDate() {
+      let form = new FormData();
+      form.append('title', this.title);
+      form.append('price', this.price);
+      form.append('description', this.description);
+      form.append('consumer', this.$store.getters.getUserId);
+      form.append('files', this.files ? this.files : '');
+      form.append('state', 1);
+      this.create(form);
     },
     create(body) {
-      console.log('Cadastrar necessidade.');
       this.loading = true;
       instanceNeedsAPI
         .post(body)
         .then(response => {
-          console.log(response);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000)
+          this.$store.dispatch('addNeeds', response.data);
+          this.loading = false;
         })
         .catch(error => {
           console.log(error);
-          setTimeout(() => {
-            this.loading = false;
-          }, 1000);
+          this.loading = false;
         });
     }
   }

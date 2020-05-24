@@ -4,13 +4,14 @@
 
     <v-row>
       <offer-card
-        v-for="item in results"
-        :key="item.id"
-        :id="item.id"
-        :title="item.title"
-        :description="item.description"
-        :price="item.price"
-        :worker="item.worker"
+        v-for="offer in listOffers.results"
+        :key="offer.id"
+        :id="offer.id"
+        :title="offer.title"
+        :description="offer.description"
+        :price="offer.price"
+        :worker="offer.worker"
+        :files="offer.files"
       ></offer-card>
     </v-row>
   </v-container>
@@ -18,7 +19,7 @@
 
 <script>
 import OfferCard from '../components/OfferCard';
-import { instanceOfferAPI } from '../api/index';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -36,18 +37,15 @@ export default {
   mounted() {
     this.loadData();
   },
+  computed: {
+    ...mapGetters([
+      'listOffers',
+    ])
+  },
   methods: {
-    loadData() {
-      instanceOfferAPI
-        .list()
-        .then(response => {
-          this.count = response.data.count;
-          this.results = response.data.results;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    ...mapActions({
+      loadData: 'loadOffers'
+    })
   }
 };
 </script>

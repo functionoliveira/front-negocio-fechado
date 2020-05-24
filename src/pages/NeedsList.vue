@@ -4,7 +4,7 @@
 
     <v-row>
       <needs-card
-        v-for="item in results"
+        v-for="item in listNeeds.results"
         :key="item.id"
         :id="item.id"
         :title="item.title"
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { instanceNeedsAPI } from '../api/index';
+import { mapGetters, mapActions } from 'vuex';
 import NeedsCard from '../components/NeedsCard';
 
 export default {
@@ -28,24 +28,17 @@ export default {
     this.loadData();
   },
   data() {
-    return {
-      count: null,
-      results: []
-    }
+    return { }
+  },
+  computed: {
+    ...mapGetters([
+      'listNeeds',
+    ])
   },
   methods: {
-    loadData() {
-      instanceNeedsAPI
-        .list()
-        .then(response => {
-          console.log(response);
-          this.count = response.data.count;
-          this.results = response.data.results;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    ...mapActions({
+      loadData: 'loadOffers'
+    })
   }
 };
 </script>

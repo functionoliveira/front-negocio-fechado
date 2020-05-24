@@ -92,7 +92,9 @@ export default {
       instanceTenderAPI
         .delete(this.id)
         .then(response => {
-          console.log(response);
+          if(response.status === 204) {
+            this.$store.dispatch('delTender', this.id);
+          }
         })
         .catch(error => {
           console.log(error);
