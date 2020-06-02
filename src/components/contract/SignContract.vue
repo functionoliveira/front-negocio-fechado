@@ -43,8 +43,7 @@ export default {
           instanceContractAPI
             .hiredAccept(this.contractID, this.$store.getters.getUserId)
             .then(response => {
-              console.log(response);
-              this.$emit('state', true);
+              this.$emit('state', response.data);
             })
             .catch(err => {
               console.log(err);
@@ -54,8 +53,7 @@ export default {
           instanceContractAPI
             .contractorAccept(this.contractID, this.$store.getters.getUserId)
             .then(response => {
-              console.log(response);
-              this.$emit('state', true);
+              this.$emit('state', response.data);
             })
             .catch(err => {
               console.log(err);

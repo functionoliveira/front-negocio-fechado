@@ -23,7 +23,7 @@
 
         <v-list>
           <v-list-item
-            @click="() => {}"
+            @click="logout"
           >
             <v-list-item-title>Deslogar</v-list-item-title>
           </v-list-item>
@@ -36,6 +36,12 @@
 <script>
   export default {
     name: 'app-header',
+    methods: {
+      logout() {
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    }
   }
 </script>
 

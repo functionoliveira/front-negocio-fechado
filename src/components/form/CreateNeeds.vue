@@ -53,6 +53,7 @@
 
 <script>
 import { instanceNeedsAPI } from '../../api/index';
+import { FEEDBACK_MESSAGES } from 'Helpers/helpers';
 
 export default {
   name: 'create-needs',
@@ -95,11 +96,16 @@ export default {
       instanceNeedsAPI
         .post(body)
         .then(response => {
-          this.$store.dispatch('addNeeds', response.data);
           this.loading = false;
+          this.$store.dispatch('addNeeds', response.data);
+          this.$store.dispatch('showSuccessMessage', FEEDBACK_MESSAGES.CREATE_NEEDS_OK);
         })
         .catch(error => {
-          console.log(error);
+          this.$store.dispatch('showErrorMessage', {
+            code: "CON#1",
+            title: FEEDBACK_MESSAGES.CREATE_NEEDS_FAIL,
+            description: error.response.data
+          });
           this.loading = false;
         });
     }

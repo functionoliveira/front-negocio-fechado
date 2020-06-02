@@ -54,6 +54,7 @@
 
 <script>
 import { instanceTenderAPI } from '../../api/index';
+import { FEEDBACK_MESSAGES } from 'Helpers/helpers';
 
 export default {
   name: 'create-needs',
@@ -105,13 +106,18 @@ export default {
       instanceTenderAPI
         .post(body)
         .then(response => {
+          this.loading = false;
           if(response.status === 201) {
             this.$store.dispatch('addTender', response.data);
+            this.$store.dispatch('showSuccessMessage', FEEDBACK_MESSAGES.CREATE_TENDER_OK);
           }
-          this.loading = false;
         })
         .catch(error => {
-          console.log(error);
+          this.$store.dispatch('showErrorMessage', {
+            code: "TDR#1",
+            title: FEEDBACK_MESSAGES.CREATE_TENDER_FAIL,
+            description: error.response.data
+          });
           this.loading = false;
         });
     }

@@ -162,6 +162,7 @@
 <script>
 import { mask } from 'vue-the-mask';
 import { instanceUserAPI } from '../../api/index';
+import { FEEDBACK_MESSAGES } from 'Helpers/helpers';
 
 export default {
   name: 'form-register',
@@ -207,8 +208,14 @@ export default {
           .post(this.formData())
           .then(response => {
             console.log(response);
+            this.$store.dispatch('showSuccessMessage', FEEDBACK_MESSAGES.REGISTER_OK);
           })
           .catch(err => {
+            this.$store.dispatch('showErrorMessage', {
+              code: "TDR#1",
+              title: FEEDBACK_MESSAGES.REGISTER_FAIL,
+              description: err.response.data
+            });
             console.log(err);
           });
       }

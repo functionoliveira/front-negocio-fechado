@@ -33,8 +33,9 @@
 </template>
 
 <script>
-  import { instanceContractAPI } from '../../api/index';
-  import RuleField from '../field/RuleField';
+import { instanceContractAPI } from '../../api/index';
+import RuleField from '../field/RuleField';
+import { FEEDBACK_MESSAGES } from 'Helpers/helpers';
 
 export default {
   name: 'create-needs',
@@ -91,9 +92,14 @@ export default {
         .post(body)
         .then(response => {
           console.log(response);
+          this.$store.dispatch('showSuccessMessage', FEEDBACK_MESSAGES.CREATE_CONTRACT_OK);
         })    
         .catch(err => {
-          console.log(err);
+          this.$store.dispatch('showErrorMessage', {
+            code: "CON#1",
+            title: FEEDBACK_MESSAGES.CREATE_CONTRACT_FAIL,
+            description: err.response.data
+          });
         });
     }
   }

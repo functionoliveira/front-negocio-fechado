@@ -3,7 +3,7 @@
  */
 import User from '../user/user.storage';
 import { instanceAuthAPI } from '../../api/index';
-import { validateToken } from '../../helpers/helpers';
+import { validateToken } from 'Helpers/helpers';
 
 const state = {
     user: { ...User.state },
@@ -23,6 +23,7 @@ const actions = {
         .then(response => {
           let valid = validateToken(response.data.access);
           if(valid.ok) {
+            sessionStorage.setItem('token', response.data.access);
             context.commit('saveUser', valid.body);
           }
           return valid;
@@ -30,6 +31,14 @@ const actions = {
         .catch(error => {
           return error;
         });
+    },
+    loadToken(context) {
+      let token = sessionStorage.getItem('token');
+      let valid = validateToken(token);
+      if(valid.ok) {
+        context.commit('saveUser', valid.body);
+      }
+      return valid;
     }
 }
 

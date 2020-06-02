@@ -49,6 +49,7 @@
 <script>
 import { mask } from 'vue-the-mask';
 import { instanceOfferAPI } from '../../api/index';
+import { FEEDBACK_MESSAGES } from 'Helpers/helpers';
 
 export default {
   name: 'create-offer',
@@ -92,11 +93,16 @@ export default {
       instanceOfferAPI
         .post(body)
         .then(response => {
-          this.$store.dispatch('addOffer', response.data);
           this.loading = false;
+          this.$store.dispatch('addOffer', response.data);
+          this.$store.dispatch('showSuccessMessage', FEEDBACK_MESSAGES.CREATE_OFFER_OK);
         })
         .catch(error => {
-          console.log(error);
+          this.$store.dispatch('showErrorMessage', {
+            code: "OFR#1",
+            title: FEEDBACK_MESSAGES.CREATE_OFFER_FAIL,
+            description: error.response.data
+          });
           this.loading = false;
         });
     },
